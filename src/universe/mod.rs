@@ -1,7 +1,6 @@
 extern crate rayon;
 extern crate rand;
 
-use std::io;
 use self::rand::Rng;
 use self::rayon::prelude::*;
 

@@ -1,4 +1,6 @@
 extern crate iron;
+extern crate serde;
+extern crate serde_json;
 
 use iron::prelude::*;
 use iron::status;
@@ -14,10 +16,13 @@ fn main() {
     let mut elec = vec![0];
 
     universe::initialize_life(trimmed, &mut universe);
+    universe::particles(&mut universe, &mut neut, &mut prot, &mut elec);
+    universe::charge_of_field(&mut prot, &mut elec, trimmed);
+    universe::atom_charge(&mut universe);
 
-    Iron::new(|_: &mut Request| {
-        let buffer = universe.len().to_string();
-        String::from_utf8(buffer).unwrap();
-        Ok(Response::with((status::Ok, "{}", )))
+    Iron::new(move |_: &mut Request| {
+        let serialized = serde_json::to_string(&universe).unwrap();
+
+        Ok(Response::with((status::Ok, "{}", "Hello World")))
     }).http("localhost:3000").unwrap();
 }
