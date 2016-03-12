@@ -1,14 +1,12 @@
 extern crate rayon;
 extern crate rand;
-extern crate serde;
-extern crate serde_json;
 
 use self::rand::Rng;
 use self::rayon::prelude::*;
 
 mod atom;
 
-#[derive(Debug)]
+#[derive(RustcEncodable, Debug)]
 pub struct LifeBlock{
     pub x_y: (i64, i64),
     pub z: i64,

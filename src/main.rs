@@ -1,9 +1,9 @@
 extern crate iron;
-extern crate serde;
-extern crate serde_json;
+extern crate rustc_serialize;
 
 use iron::prelude::*;
 use iron::status;
+use rustc_serialize::json;
 
 mod universe;
 
@@ -26,6 +26,8 @@ fn main() {
 
         // let serialized = serde_json::to_string(&universe).unwrap();
 
-        Ok(Response::with((status::Ok, "{}", "Hello World")))
+        let encoded = json::encode(&universe).unwrap();
+
+        Ok(Response::with((status::Ok, "{}", encoded)))
     }).http("localhost:3000").unwrap();
 }
