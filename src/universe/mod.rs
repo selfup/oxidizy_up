@@ -1,6 +1,3 @@
-#![feature(custom_derive, plugin)]
-#![plugin(serde_macros)]
-
 extern crate rayon;
 extern crate rand;
 extern crate serde;
@@ -11,33 +8,13 @@ use self::rayon::prelude::*;
 
 mod atom;
 
-#[derive(Serialize,Debug)]
+#[derive(Debug)]
 pub struct LifeBlock{
     pub x_y: (i64, i64),
     pub z: i64,
     pub charge: i64,
     pub atom: atom::Atom,
 }
-
-// pub fn main() {
-//     println!("Size of universe. Please:");
-//     let mut size = String::new();
-//
-//     io::stdin().read_line(&mut size).expect("Failed to read line");
-//     let trimmed = size.trim().parse::<i64>().unwrap();
-//
-//     let mut universe = vec![];
-//     let mut neut = vec![0];
-//     let mut prot = vec![0];
-//     let mut elec = vec![0];
-//
-//     initialize_life(trimmed, &mut universe);
-//     particles(&mut universe, &mut neut, &mut prot, &mut elec);
-//     charge_of_field(&mut prot, &mut elec, trimmed);
-//     atom_charge(&mut universe);
-//
-//     println!("Size of Universe: {:?}", universe.len());
-// }
 
 pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
     for v in 0..limit + 1 {

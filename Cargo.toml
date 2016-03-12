@@ -3,10 +3,6 @@ name = "oxidizy"
 version = "0.1.0"
 authors = ["selfup <boudinot.regis@yahoo.com>"]
 
-[build-dependencies]
-serde_codegen = "*"
-syntex = "*"
-
 [dependencies]
 rayon = "0.3.1"
 rand = "0.3"

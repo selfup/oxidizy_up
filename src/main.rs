@@ -24,7 +24,7 @@ fn main() {
 
     Iron::new(move |_: &mut Request| {
 
-        let serialized = serde_json::to_string(&universe).unwrap();
+        // let serialized = serde_json::to_string(&universe).unwrap();
 
         Ok(Response::with((status::Ok, "{}", "Hello World")))
     }).http("localhost:3000").unwrap();
