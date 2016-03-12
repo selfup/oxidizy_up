@@ -16,6 +16,8 @@ fn main() {
     universe::initialize_life(trimmed, &mut universe);
 
     Iron::new(|_: &mut Request| {
-        Ok(Response::with((status::Ok, ("{}", universe))))
+        let buffer = universe.len().to_string();
+        String::from_utf8(buffer).unwrap();
+        Ok(Response::with((status::Ok, "{}", )))
     }).http("localhost:3000").unwrap();
 }
