@@ -10,6 +10,6 @@ syntex = "*"
 [dependencies]
 rayon = "0.3.1"
 rand = "0.3"
-iron = "*"
 serde = "*"
 serde_json = "*"
+iron = "*"

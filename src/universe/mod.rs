@@ -1,14 +1,17 @@
+#![feature(custom_derive, plugin)]
+#![plugin(serde_macros)]
+
 extern crate rayon;
 extern crate rand;
+extern crate serde;
+extern crate serde_json;
 
 use self::rand::Rng;
 use self::rayon::prelude::*;
 
 mod atom;
 
-// use self::atom;
-
-#[derive(Debug)]
+#[derive(Serialize,Debug)]
 pub struct LifeBlock{
     pub x_y: (i64, i64),
     pub z: i64,

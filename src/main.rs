@@ -20,7 +20,10 @@ fn main() {
     universe::charge_of_field(&mut prot, &mut elec, trimmed);
     universe::atom_charge(&mut universe);
 
+    println!("{:?}", universe);
+
     Iron::new(move |_: &mut Request| {
+
         let serialized = serde_json::to_string(&universe).unwrap();
 
         Ok(Response::with((status::Ok, "{}", "Hello World")))
