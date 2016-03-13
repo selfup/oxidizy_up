@@ -1,0 +1,119 @@
+<DOCTYPE! html>
+<html>
+  <head>
+    <title>The Universe</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+  <style>
+    body {background-color:#b76e6a; margin: 50px;}
+    h1   {color:white;}
+    .color div {
+      color: grey;
+    }
+    .chart div {
+      font: 10px sans-serif;
+      background-color: white;
+      text-align: right;
+      padding: 3px;
+      margin: 1px;
+      color: black;
+    }
+  </style>
+    <h3>The chart below: Stacked x and y coordinates</h3>
+    <p>(3D size represented in length and movement)</p>
+      <div id="graph"></div>
+      <hr>
+      <h3>The chart below: Electrons, Neutrons, Protons</h3>
+      <div id="universe"></div>
+      <div class="chart"></div>
+      <hr>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script>
+          const universeCall = () => {
+            var coords
+            $.ajax({
+                async: false,
+                type: 'GET',
+                url: 'http://localhost:3000/api/v1/universe-13-cubed',
+                success: function(data){
+                  coords = data
+                },
+                error: function(err){
+                  console.log("Failed!")
+                }
+              })
+            return coords
+          }
+
+          var incoming = JSON.parse(universeCall())
+
+          var nodesBuilder = () => {
+            var constructor = []
+            for (var i = 0; i < incoming.length; i++) {
+              constructor.push({x: incoming[i].x_y[0], y: incoming[i].x_y[0]})
+            }
+            return constructor
+          }
+
+          var particleCounter = (e, n, p, x) => {
+            e.push(incoming[x].atom.electrons)
+            n.push(incoming[x].atom.nucleus.neutrons)
+            p.push(incoming[x].atom.nucleus.protons)
+          }
+
+          var particlePusher = (e, n, p, ar) => {
+            ar.push(e.reduce( (prev, curr) => prev + curr ))
+            ar.push(n.reduce( (prev, curr) => prev + curr ))
+            ar.push(p.reduce( (prev, curr) => prev + curr ))
+          }
+
+          var particlesByNumber = (data) => {
+            var particleCounts = []
+            var elecs = []; var neuts = []; var prots = []
+
+            for (var i = 0; i < data.length; i++) {
+              particleCounter(elecs, neuts, prots, i)
+            }
+
+            particlePusher(elecs, neuts, prots, particleCounts)
+            return particleCounts
+          }
+
+          nodes = nodesBuilder()
+
+          var p_num = particlesByNumber(incoming)
+
+          var x = d3.scale.linear()
+            .domain([0, d3.max(p_num)])
+            .range([0, 420]);
+
+            d3.select(".chart")
+              .selectAll("div")
+                .data(p_num)
+              .enter().append("div")
+                .style("width", function(d) { return x(d) + "px"; })
+                .text(function(d) { return d; });
+
+          var vis = d3.select("#graph")
+            .append("svg")
+            .attr("width", 200).attr("height", 50);
+
+          vis.selectAll("circle.nodes")
+             .data(nodes)
+             .enter()
+             .append("svg:circle")
+             .attr("cx", function(d) { return d.x; })
+             .attr("cy", function(d) { return d.y; })
+             .attr("r", "4px")
+             .attr("fill", "white")
+        </script>
+          <h1>Powered By:</h1>
+          <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/d/d5/Rust_programming_language_black_logo.svg/1024px-Rust_programming_language_black_logo.svg.png" style="width: 50px; height: 50px;">
+          <img src="http://www.w3devcampus.com/wp-content/uploads/logoAndOther/logo_JavaScript.png" style="width: 50px; height: 50px;">
+          <hr>
+          <h3>Repo: <a href="https://github.com/selfup/oxidizy">Oxidizy</a></h3>
+          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    </body>
+</html>
