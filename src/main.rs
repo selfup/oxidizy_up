@@ -19,7 +19,7 @@ fn main() {
 
     Iron::new(router).http("localhost:3000").unwrap();
 
-    fn handler(req: &mut Request) -> IronResult<Response> {
+    fn handler(_req: &mut Request) -> IronResult<Response> {
         let trimmed = 12;
 
         let mut universe = vec![];
@@ -36,7 +36,7 @@ fn main() {
         Ok(Response::with((status::Ok, "{}", encoded)))
     }
 
-    fn js(req: &mut Request) -> IronResult<Response> {
+    fn js(_req: &mut Request) -> IronResult<Response> {
         Ok(Response::with((status::Ok, Path::new("src/public/d3-visual.html"))))
     }
 }
