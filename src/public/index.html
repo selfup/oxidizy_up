@@ -7,10 +7,22 @@
   <style>
     body {background-color:teal;}
     h1   {color:white;}
+    .chart div {
+      font: 10px sans-serif;
+      background-color: white;
+      text-align: right;
+      padding: 3px;
+      margin: 1px;
+      color: black;
+    }
   </style>
-    <h1>Hello</h1>
-    <div id="graph"></div>
+    <h1>The chart below: Stacked x and y coordinates</h1>
+      <div id="graph"></div>
+      <hr>
+      <h3>The chart below: Electrons, Neutrons, Protons</h3>
       <div id="universe"></div>
+      <div class="chart"></div>
+      <hr>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script>
@@ -30,21 +42,58 @@
             return coords
           }
 
-          var sample = JSON.parse(universeCall())
+          var incoming = JSON.parse(universeCall())
 
           var nodesBuilder = () => {
             var constructor = []
-            for (var i = 0; i < sample.length; i++) {
-              constructor.push({x: sample[i].x_y[0], y: sample[i].x_y[0]})
+            for (var i = 0; i < incoming.length; i++) {
+              constructor.push({x: incoming[i].x_y[0], y: incoming[i].x_y[0]})
             }
             return constructor
           }
 
+          var particleCounter = (e, n, p, x) => {
+            e.push(incoming[x].atom.electrons)
+            n.push(incoming[x].atom.nucleus.neutrons)
+            p.push(incoming[x].atom.nucleus.protons)
+          }
+
+          var particlePusher = (e, n, p, ar) => {
+            ar.push(e.reduce( (prev, curr) => prev + curr ))
+            ar.push(n.reduce( (prev, curr) => prev + curr ))
+            ar.push(p.reduce( (prev, curr) => prev + curr ))
+          }
+
+          var particlesByNumber = (data) => {
+            var particleCounts = []
+            var elecs = []; var neuts = []; var prots = []
+
+            for (var i = 0; i < data.length; i++) {
+              particleCounter(elecs, neuts, prots, i)
+            }
+
+            particlePusher(elecs, neuts, prots, particleCounts)
+            return particleCounts
+          }
+
           nodes = nodesBuilder()
+
+          var p_num = particlesByNumber(incoming)
+
+          var x = d3.scale.linear()
+            .domain([0, d3.max(p_num)])
+            .range([0, 420]);
+
+            d3.select(".chart")
+              .selectAll("div")
+                .data(p_num)
+              .enter().append("div")
+                .style("width", function(d) { return x(d) + "px"; })
+                .text(function(d) { return d; });
 
           var vis = d3.select("#graph")
             .append("svg")
-            .attr("width", 200).attr("height", 200);
+            .attr("width", 200).attr("height", 50);
 
           vis.selectAll("circle.nodes")
              .data(nodes)
