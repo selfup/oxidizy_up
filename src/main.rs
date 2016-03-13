@@ -20,7 +20,7 @@ fn main() {
     Iron::new(router).http("localhost:3000").unwrap();
 
     fn handler(req: &mut Request) -> IronResult<Response> {
-        let trimmed = 1;
+        let trimmed = 5;
 
         let mut universe = vec![];
         let mut neut = vec![0];
@@ -37,6 +37,6 @@ fn main() {
     }
 
     fn js(req: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, Path::new("./staticfile/index.html"))))
+        Ok(Response::with((status::Ok, Path::new("src/public/index.html"))))
     }
 }
