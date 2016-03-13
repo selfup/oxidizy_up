@@ -15,7 +15,7 @@ mod universe;
 fn main() {
     let mut router = Router::new();
     router.get("/api/v1/universe-13-cubed", handler);
-    router.get("/visual-data", js);
+    router.get("/", js);
 
     Iron::new(router).http("localhost:3000").unwrap();
 
