@@ -7,6 +7,9 @@
   <style>
     body {background-color:teal;}
     h1   {color:white;}
+    .color div {
+      color: grey;
+    }
     .chart div {
       font: 10px sans-serif;
       background-color: white;
@@ -16,7 +19,8 @@
       color: black;
     }
   </style>
-    <h1>The chart below: Stacked x and y coordinates</h1>
+    <h3>The chart below: Stacked x and y coordinates</h3>
+    <p>(3D size represented in length and movement)</p>
       <div id="graph"></div>
       <hr>
       <h3>The chart below: Electrons, Neutrons, Protons</h3>
@@ -101,8 +105,8 @@
              .append("svg:circle")
              .attr("cx", function(d) { return d.x; })
              .attr("cy", function(d) { return d.y; })
-             .attr("r", "2px")
-             .attr("fill", "black")
+             .attr("r", "4px")
+             .attr("fill", "white")
         </script>
     </body>
 </html>
