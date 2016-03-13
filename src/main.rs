@@ -14,12 +14,12 @@ mod universe;
 
 fn main() {
     let mut router = Router::new();
-    router.get("/api/v1/universe-13-cubed", handler);
-    router.get("/", js);
+    router.get("/api/v1/universe-13-cubed", api_data);
+    router.get("/", root);
 
     Iron::new(router).http("localhost:3000").unwrap();
 
-    fn handler(_req: &mut Request) -> IronResult<Response> {
+    fn api_data(_req: &mut Request) -> IronResult<Response> {
         let trimmed = 12;
 
         let mut universe = vec![];
@@ -36,7 +36,7 @@ fn main() {
         Ok(Response::with((status::Ok, "{}", encoded)))
     }
 
-    fn js(_req: &mut Request) -> IronResult<Response> {
+    fn root(_req: &mut Request) -> IronResult<Response> {
         Ok(Response::with((status::Ok, Path::new("src/public/d3-visual.html"))))
     }
 }
