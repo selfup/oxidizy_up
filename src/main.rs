@@ -20,7 +20,7 @@ fn main() {
     Iron::new(router).http("localhost:3000").unwrap();
 
     fn handler(req: &mut Request) -> IronResult<Response> {
-        let trimmed = 5;
+        let trimmed = 12;
 
         let mut universe = vec![];
         let mut neut = vec![0];
