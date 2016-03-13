@@ -14,8 +14,8 @@ mod universe;
 
 fn main() {
     let mut router = Router::new();
-    router.get("/", handler);
-    router.get("/pub", js);
+    router.get("/api/v1/universe-13-cubed", handler);
+    router.get("/visual-data", js);
 
     Iron::new(router).http("localhost:3000").unwrap();
 
@@ -37,6 +37,6 @@ fn main() {
     }
 
     fn js(req: &mut Request) -> IronResult<Response> {
-        Ok(Response::with((status::Ok, Path::new("src/public/index.html"))))
+        Ok(Response::with((status::Ok, Path::new("src/public/d3-visual.html"))))
     }
 }
