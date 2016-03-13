@@ -8,22 +8,22 @@
       <div id="universe"></div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script>
-        const universeCall = (event) => {
-          $.ajax({
-              type: 'GET',
-              url: 'http://localhost:3000',
-              success: function(data){
-                console.log(data)
-                $('#universe').empty()
-                $('#universe').append(`<h3>${data}</h3>`)
-              },
-              error: function(err){
-                console.log("Failed!")
-              }
-            })
-        }
-        // call the JSON from root and display it on the page
-        universeCall()
+          const universeCall = (event) => {
+            $.ajax({
+                type: 'GET',
+                url: 'http://localhost:3000',
+                success: function(data){
+                  console.log(data)
+                  $('#universe').empty()
+                  $('#universe').append(`<h3>${data}</h3>`)
+                },
+                error: function(err){
+                  console.log("Failed!")
+                }
+              })
+          }
+          // call the JSON from root and display it on the page
+          universeCall()
         </script>
     </body>
 </html>
