@@ -2,6 +2,8 @@
 
 An ambitious Open Source project to mimic the smaller things in life.
 
+This is the Server!
+
 The idea is to build a cli tool that can generate enough life, and *sublife* (neutrons, protons, electrons), that when you give the tool atomic weights, it can "generate" appropriate elements.
 
 Another ambitious goal, would be to set up bonding logic to create water or other compounds.
