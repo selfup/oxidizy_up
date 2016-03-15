@@ -20,7 +20,7 @@ fn main() {
     Iron::new(router).http("universe.rejs.io:80").unwrap();
 
     fn api_data(_req: &mut Request) -> IronResult<Response> {
-        let trimmed = 12;
+        let trimmed = 5;
 
         let mut universe = vec![];
         let mut neut = vec![0];
