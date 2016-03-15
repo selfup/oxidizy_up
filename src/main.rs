@@ -17,7 +17,7 @@ fn main() {
     router.get("/api/v1/universe-13-cubed", api_data);
     router.get("/", root);
 
-    Iron::new(router).http("universe.rejs.io").unwrap();
+    Iron::new(router).http("universe.rejs.io:80").unwrap();
 
     fn api_data(_req: &mut Request) -> IronResult<Response> {
         let trimmed = 12;
