@@ -14,7 +14,7 @@ mod universe;
 
 fn main() {
     let mut router = Router::new();
-    router.get("/api/v1/universe-13-cubed", api_data);
+    router.get("/api/v1/data", api_data);
     router.get("/", root);
 
     Iron::new(router).http("universe.rejs.io:80").unwrap();
