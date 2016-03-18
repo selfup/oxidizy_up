@@ -47,3 +47,4 @@ MSVC builds of Rust additionally require an installation of Visual Studio 2013 (
 
 Rust's support for the GNU ABI is more mature, and is recommended for typical uses.
 ```
+testing
