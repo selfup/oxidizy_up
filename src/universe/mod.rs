@@ -12,38 +12,35 @@ pub struct LifeBlock{
     pub z: i64,
     pub charge: i64,
     pub atom: atom::Atom,
-    pub i: i64,
 }
 
-pub fn rand_ident() -> i64 {
-    let mut rand_num = vec![];
-    let mut rn : i64 = 0;
-
-    for _i in 0..1 {
-        let rexp : i64 = rand::thread_rng().gen_range(0, 1000);
-        let srexp : i64 = rand::thread_rng().gen_range(0, 100);
-        rand_num.push(rand::thread_rng().gen_range(0, 100000));
-        rn = rand_num.par_iter().map( |i| (i * rexp * rexp) ).sum();
-    }
-
-    rn
-}
+// pub fn rand_ident() -> i64 {
+//     let mut rand_num = vec![];
+//     let mut rn : i64 = 0;
+//
+//     for _i in 0..1 {
+//         let rexp : i64 = rand::thread_rng().gen_range(0, 1000);
+//         let srexp : i64 = rand::thread_rng().gen_range(0, 100);
+//         rand_num.push(rand::thread_rng().gen_range(0, 100000));
+//         rn = rand_num.par_iter().map( |i| (i * rexp * srexp) ).sum();
+//     }
+//
+//     rn
+// }
 
 pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
+    let mut rng = rand::weak_rng();
     for v in 0..limit + 1 {
         for w in 0..limit + 1 {
             for q in 0..limit + 1 {
-                let n1: i64 = rand::thread_rng().gen_range(0, 118);
-                let n2: i64 = rand::thread_rng().gen_range(0, 118);
-                let n3: i64 = rand::thread_rng().gen_range(0, 118);
-
-
+                let n1: i64 = rng.gen_range(0, 118);
+                let n2: i64 = rng.gen_range(0, 118);
+                let n3: i64 = rng.gen_range(0, 118);
                 uni.push(LifeBlock { x_y: (v, w), z: q,
                            charge: 0,
                            atom: atom::Atom { electrons: n1,
                                                 nucleus: atom::Nucleus {protons: n2, neutrons: n3}
-                                            },
-                           i: (rand_ident())
+                                            }
                                    },
                         )
             }
