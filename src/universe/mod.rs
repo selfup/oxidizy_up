@@ -1,7 +1,7 @@
 extern crate rayon;
 extern crate rand;
 
-use self::rand::Rng;
+use self::rand::*;
 use self::rayon::prelude::*;
 
 mod atom;
@@ -14,19 +14,34 @@ pub struct LifeBlock{
     pub atom: atom::Atom,
 }
 
+// pub fn rand_ident() -> i64 {
+//     let mut rand_num = vec![];
+//     let mut rn : i64 = 0;
+//
+//     for _i in 0..1 {
+//         let rexp : i64 = rand::thread_rng().gen_range(0, 1000);
+//         let srexp : i64 = rand::thread_rng().gen_range(0, 100);
+//         rand_num.push(rand::thread_rng().gen_range(0, 100000));
+//         rn = rand_num.par_iter().map( |i| (i * rexp * srexp) ).sum();
+//     }
+//
+//     rn
+// }
+
 pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
+    let mut rng = rand::weak_rng();
     for v in 0..limit + 1 {
         for w in 0..limit + 1 {
             for q in 0..limit + 1 {
-                let n1: i64 = rand::thread_rng().gen_range(0, 118);
-                let n2: i64 = rand::thread_rng().gen_range(0, 118);
-                let n3: i64 = rand::thread_rng().gen_range(0, 118);
+                let n1: i64 = rng.gen_range(0, 118);
+                let n2: i64 = rng.gen_range(0, 118);
+                let n3: i64 = rng.gen_range(0, 118);
                 uni.push(LifeBlock { x_y: (v, w), z: q,
                            charge: 0,
                            atom: atom::Atom { electrons: n1,
                                                 nucleus: atom::Nucleus {protons: n2, neutrons: n3}
                                             }
-                                   }
+                                   },
                         )
             }
         }
@@ -36,13 +51,23 @@ pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
 #[test]
 fn it_can_begin() {
     let mut universe = vec![];
-    initialize_life(5, &mut universe);
+    initialize_life(12, &mut universe);
 
-    assert_eq!(universe.len(), 216);
+    assert_eq!(universe.len(), 2197);
     assert_eq!(universe[0].x_y, (0, 0));
     assert_eq!(universe[0].z, 0);
-    assert_eq!(universe[20].x_y, (0, 3));
-    assert_eq!(universe[20].z, 2);
+    assert_eq!(universe[20].x_y, (0, 1));
+    assert_eq!(universe[20].z, 7);
+
+    let mut unique = vec![];
+
+    for i in universe {
+        unique.push(i.i)
+    }
+
+    unique.sort();
+    unique.dedup();
+    assert_eq!(13*13*13, unique.len());
 }
 
 pub fn particles(input: &mut Vec<LifeBlock>, n: &mut Vec<i64>, p: &mut Vec<i64>, e: &mut Vec<i64>) {

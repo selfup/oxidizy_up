@@ -17,10 +17,10 @@ fn main() {
     router.get("/api/v1/data", api_data);
     router.get("/", root);
 
-    Iron::new(router).http("universe.rejs.io:80").unwrap();
+    Iron::new(router).http("localhost:8080").unwrap();
 
     fn api_data(_req: &mut Request) -> IronResult<Response> {
-        let trimmed = 5;
+        let trimmed = 50;
 
         let mut universe = vec![];
         let mut neut = vec![0];
