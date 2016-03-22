@@ -14,20 +14,6 @@ pub struct LifeBlock{
     pub atom: atom::Atom,
 }
 
-// pub fn rand_ident() -> i64 {
-//     let mut rand_num = vec![];
-//     let mut rn : i64 = 0;
-//
-//     for _i in 0..1 {
-//         let rexp : i64 = rand::thread_rng().gen_range(0, 1000);
-//         let srexp : i64 = rand::thread_rng().gen_range(0, 100);
-//         rand_num.push(rand::thread_rng().gen_range(0, 100000));
-//         rn = rand_num.par_iter().map( |i| (i * rexp * srexp) ).sum();
-//     }
-//
-//     rn
-// }
-
 pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
     let mut rng = rand::weak_rng();
     for v in 0..limit + 1 {
