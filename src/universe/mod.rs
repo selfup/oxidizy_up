@@ -29,23 +29,28 @@ pub struct LifeBlock{
 // }
 
 pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
-    let mut rng = rand::weak_rng();
     for v in 0..limit + 1 {
         for w in 0..limit + 1 {
             for q in 0..limit + 1 {
-                let n1: i64 = rng.gen_range(0, 118);
-                let n2: i64 = rng.gen_range(0, 118);
-                let n3: i64 = rng.gen_range(0, 118);
                 uni.push(LifeBlock { x_y: (v, w), z: q,
                            charge: 0,
-                           atom: atom::Atom { electrons: n1,
-                                                nucleus: atom::Nucleus {protons: n2, neutrons: n3}
+                           atom: atom::Atom { electrons: 0,
+                                                nucleus: atom::Nucleus {protons: 0, neutrons: 0}
                                             }
                                    },
                         )
             }
         }
     }
+}
+
+pub fn rand_particles(input: &mut Vec<LifeBlock>) -> &mut Vec<LifeBlock> {
+    let rand_particle = |x: &mut LifeBlock| -> &mut LifeBlock {
+        x.atom.nucleus.neutrons = rand::weak_rng().gen_range(0, 118);
+        x
+    };
+    input.par_iter_mut().map(|i| rand_particle(i));
+    input
 }
 
 #[test]

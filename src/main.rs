@@ -20,7 +20,7 @@ fn main() {
     Iron::new(router).http("localhost:8080").unwrap();
 
     fn api_data(_req: &mut Request) -> IronResult<Response> {
-        let trimmed = 50;
+        let trimmed = 12;
 
         let mut universe = vec![];
         let mut neut = vec![0];
@@ -29,6 +29,7 @@ fn main() {
 
         universe::initialize_life(trimmed, &mut universe);
         universe::particles(&mut universe, &mut neut, &mut prot, &mut elec);
+        universe::rand_particles(&mut universe);
         universe::charge_of_field(&mut prot, &mut elec, trimmed);
         universe::atom_charge(&mut universe);
         let encoded = json::encode(&universe).unwrap();
