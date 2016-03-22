@@ -44,13 +44,11 @@ pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
     }
 }
 
-pub fn rand_particles(input: &mut Vec<LifeBlock>) -> &mut Vec<LifeBlock> {
-    let rand_particle = |x: &mut LifeBlock| -> &mut LifeBlock {
+pub fn rand_particles(input: &mut Vec<LifeBlock>) {
+    fn rand_particle(x: &mut LifeBlock) {
         x.atom.nucleus.neutrons = rand::weak_rng().gen_range(0, 118);
-        x
-    };
-    input.par_iter_mut().map(|i| rand_particle(i));
-    input
+    }
+    input.par_iter_mut().for_each(|i| rand_particle(i));
 }
 
 #[test]
