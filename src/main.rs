@@ -1,9 +1,13 @@
+#![feature(test)]
+
 extern crate iron;
 extern crate rustc_serialize;
 extern crate router;
 extern crate staticfile;
 extern crate mount;
+extern crate test;
 
+use test::Bencher;
 use iron::prelude::*;
 use iron::status;
 use rustc_serialize::json;
@@ -39,4 +43,14 @@ fn main() {
     fn root(_req: &mut Request) -> IronResult<Response> {
         Ok(Response::with((status::Ok, Path::new("src/public/d3-visual.html"))))
     }
+}
+
+
+#[bench]
+fn bench_universe_creation_calc(b: &mut Bencher) {
+    let trimmed = 100;
+
+    let mut universe = vec![];
+
+    b.iter(|| universe::initialize_life(trimmed, &mut universe));
 }

@@ -37,23 +37,13 @@ pub fn initialize_life(limit: i64, uni: &mut Vec<LifeBlock>) {
 #[test]
 fn it_can_begin() {
     let mut universe = vec![];
-    initialize_life(12, &mut universe);
+    initialize_life(100, &mut universe);
 
-    assert_eq!(universe.len(), 2197);
+    assert_eq!(universe.len(), 1030301);
     assert_eq!(universe[0].x_y, (0, 0));
     assert_eq!(universe[0].z, 0);
-    assert_eq!(universe[20].x_y, (0, 1));
-    assert_eq!(universe[20].z, 7);
-
-    let mut unique = vec![];
-
-    for i in universe {
-        unique.push(i.i)
-    }
-
-    unique.sort();
-    unique.dedup();
-    assert_eq!(13*13*13, unique.len());
+    assert_eq!(universe[20].x_y, (0, 0));
+    assert_eq!(universe[20].z, 20);
 }
 
 pub fn particles(input: &mut Vec<LifeBlock>, n: &mut Vec<i64>, p: &mut Vec<i64>, e: &mut Vec<i64>) {
