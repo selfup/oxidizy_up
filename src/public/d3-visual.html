@@ -30,10 +30,10 @@
       color: black;
     }
   </style>
-    <h3>The chart below - Stacked x and y coordinates:</h3>
+    <!-- <h3>The chart below - Stacked x and y coordinates:</h3>
     <p>(3D size represented in length and movement)</p>
       <div id="graph"></div>
-      <hr>
+      <hr> -->
       <h3>The chart below - Electrons, Neutrons, Protons:</h3>
       <div id="universe"></div>
       <div class="chart"></div>
@@ -92,7 +92,7 @@
             return particleCounts
           }
 
-          const nodes = nodesBuilder()
+          // const nodes = nodesBuilder()
 
           const p_num = particlesByNumber(incoming)
 
@@ -107,18 +107,18 @@
                 .style("width", function(d) { return x(d) + "px"; })
                 .text(function(d) { return d; });
 
-          const vis = d3.select("#graph")
-            .append("svg")
-            .attr("width", 200).attr("height", 50);
+          // const vis = d3.select("#graph")
+          //   .append("svg")
+          //   .attr("width", 200).attr("height", 50);
 
-          vis.selectAll("circle.nodes")
-             .data(nodes)
-             .enter()
-             .append("svg:circle")
-             .attr("cx", d => { return d.x; })
-             .attr("cy", d => { return d.y; })
-             .attr("r", "4px")
-             .attr("fill", "white")
+          // vis.selectAll("circle.nodes")
+          //    .data(nodes)
+          //    .enter()
+          //    .append("svg:circle")
+          //    .attr("cx", d => { return d.x; })
+          //    .attr("cy", d => { return d.y; })
+          //    .attr("r", "4px")
+          //    .attr("fill", "white")
         </script>
           <h1>Powered By:</h1>
           <img src="https://upload.wikimedia.org/wikipedia/ru/thumb/d/d5/Rust_programming_language_black_logo.svg/1024px-Rust_programming_language_black_logo.svg.png" style="width: 50px; height: 50px;">
