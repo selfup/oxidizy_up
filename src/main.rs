@@ -45,7 +45,6 @@ fn main() {
     }
 }
 
-
 #[bench]
 fn bench_universe_creation_calc(b: &mut Bencher) {
     let trimmed = 100;
