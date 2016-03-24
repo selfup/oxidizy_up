@@ -41,8 +41,9 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script>
-          const universeCall = () => {
-            var coords
+        'use strict'
+        const universeCall = () => {
+          let coords
             $.ajax({
                 async: false,
                 type: 'GET',
@@ -57,33 +58,33 @@
             return coords
           }
 
-          var incoming = JSON.parse(universeCall())
+          const incoming = JSON.parse(universeCall())
 
-          var nodesBuilder = () => {
-            var constructor = []
-            for (var i = 0; i < incoming.length; i++) {
+          const nodesBuilder = () => {
+            let constructor = []
+            for (let i = 0; i < incoming.length; i++) {
               constructor.push({x: incoming[i].x_y[0], y: incoming[i].x_y[0]})
             }
             return constructor
           }
 
-          var particleCounter = (e, n, p, x) => {
+          const particleCounter = (e, n, p, x) => {
             e.push(incoming[x].atom.electrons)
             n.push(incoming[x].atom.nucleus.neutrons)
             p.push(incoming[x].atom.nucleus.protons)
           }
 
-          var particlePusher = (e, n, p, ar) => {
+          const particlePusher = (e, n, p, ar) => {
             ar.push(e.reduce( (prev, curr) => prev + curr ))
             ar.push(n.reduce( (prev, curr) => prev + curr ))
             ar.push(p.reduce( (prev, curr) => prev + curr ))
           }
 
-          var particlesByNumber = (data) => {
-            var particleCounts = []
-            var elecs = []; var neuts = []; var prots = []
+          const particlesByNumber = (data) => {
+            let particleCounts = []
+            let elecs = []; let neuts = []; let prots = []
 
-            for (var i = 0; i < data.length; i++) {
+            for (let i = 0; i < data.length; i++) {
               particleCounter(elecs, neuts, prots, i)
             }
 
@@ -91,11 +92,11 @@
             return particleCounts
           }
 
-          nodes = nodesBuilder()
+          const nodes = nodesBuilder()
 
-          var p_num = particlesByNumber(incoming)
+          const p_num = particlesByNumber(incoming)
 
-          var x = d3.scale.linear()
+          const x = d3.scale.linear()
             .domain([0, d3.max(p_num)])
             .range([0, 420]);
 
@@ -106,7 +107,7 @@
                 .style("width", function(d) { return x(d) + "px"; })
                 .text(function(d) { return d; });
 
-          var vis = d3.select("#graph")
+          const vis = d3.select("#graph")
             .append("svg")
             .attr("width", 200).attr("height", 50);
 
@@ -114,8 +115,8 @@
              .data(nodes)
              .enter()
              .append("svg:circle")
-             .attr("cx", function(d) { return d.x; })
-             .attr("cy", function(d) { return d.y; })
+             .attr("cx", d => { return d.x; })
+             .attr("cy", d => { return d.y; })
              .attr("r", "4px")
              .attr("fill", "white")
         </script>
