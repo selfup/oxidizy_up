@@ -48,10 +48,10 @@
                 async: false,
                 type: 'GET',
                 url: 'http://universe.rejs.io/api/v1/data',
-                success: function(data){
+                success: data => {
                   coords = data
                 },
-                error: function(err){
+                error: err => {
                   alert("UNIVERSE EXPLOSION? NOOO!")
                 }
               })
@@ -104,8 +104,8 @@
               .selectAll("div")
                 .data(p_num)
               .enter().append("div")
-                .style("width", function(d) { return x(d) + "px"; })
-                .text(function(d) { return d; });
+                .style("width", d => { return x(d) + "px"; })
+                .text(d => { return d; });
 
           // const vis = d3.select("#graph")
           //   .append("svg")
